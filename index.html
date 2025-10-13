@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Pak Asep Konversi Suhu (Rizal X-PPLG1)</title>
+</head>
+<body>
+    <div class="container">
+    <h2>🌡️ Temperature Converter</h2>
+
+    <label for="from">From:</label>
+    <select id="from">
+        <option value="C">Celsius</option>
+        <option value="F">Fahrenheit</option>
+        <option value="K">Kelvin</option>
+        <option value="R">Réaumur</option>
+    </select><br>
+
+    <label for="value">Value:</label>
+    <input type="number" id="value" placeholder="Enter temperature"><br>
+
+    <label for="to">To:</label>
+    <select id="to">
+        <option value="C">Celsius</option>
+        <option value="F">Fahrenheit</option>
+        <option value="K">Kelvin</option>
+        <option value="R">Réaumur</option>
+    </select><br>
+
+    <button onclick="convert()">Convert</button>
+
+    <h3 id="result"></h3>
+    <script>
+let history = [];
+// Mencari ID atau String dari label
+function convert() {
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
+    const value = parseFloat(document.getElementById("value").value);
+    const resultText = document.getElementById("result");
+    const table = document.getElementById("historyTable");
+    // Jika memasukan selain angka, kode ini dijalankan.
+    if (isNaN(value)) {
+        alert("Please enter a valid number!");
+        return;
+    }
+    // Jika konversi sama derajat, maka kode ini dijalankan.
+    if (from === to) {
+        resultText.textContent = `Same unit selected. Result: ${value.toFixed(2)}°${to}`;
+        return;
+    }
+    // Hasil untuk konversi
+    let result;
+
+    // Rumus-Rumus Suhu.
+    if (from === "C" && to === "F") result = (value * 9/5) + 32;
+    else if (from === "C" && to === "K") result = value + 273.15;
+    else if (from === "F" && to === "C") result = (value - 32) * 5/9;
+    else if (from === "F" && to === "K") result = (value - 32) * 5/9 + 273.15;
+    else if (from === "K" && to === "C") result = value - 273.15;
+    else if (from === "K" && to === "F") result = (value - 273.15) * 9/5 + 32;
+    // Tambahan untuk Reamur.
+    else if (from === "C" && to === "R") result = value * 0.8;
+    else if (from === "R" && to === "C") result = value * 1.25;
+    else if (from === "F" && to === "R") result = (value - 32) * 4/9;
+    else if (from === "R" && to === "F") result = (value * 9/4) + 32;
+    else if (from === "K" && to === "R") result = (value - 273.15) * 0.8;
+    else if (from === "R" && to === "K") result = (value * 1.25) + 273.15;
+    // Hasil dari konversi, maksud dari 'value to fix' adalah sederhanakan hasil, jadi hanya mengambil 2 desimal saja.
+    resultText.textContent = `${value.toFixed(2)}°${from} = ${result.toFixed(2)}°${to}`;
+}
+    </script>
+</div>
+</body>
+</html>
